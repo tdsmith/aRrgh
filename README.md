@@ -180,7 +180,7 @@ You can see a list of columns with `names(frame)`. You rename columns by, litera
     > a$OD
     [1] 0.086 0.269 0.446 0.538 0.626 0.782
 
-Would you like to know how many rows you have in your data frame? Use `nrow(foo)`.
+Would you like to know how many rows you have in your data frame? Use `nrow(foo)`. Do not use `length(foo)`, which will tell you how many columns you have; if you actually want that number, you can use `ncol(foo)` for clarity. `dim(foo)` will give you a vector containing both dimensions.
 
 ### Adding data to frames
 Adding columns is easy: `a <- Formaldehyde; a$bar <- seq(6)` creates a new column `bar`. Refreshingly, `a$bar <- seq(100)` fails, *BUT* `a$bar <- 1:2` works silently, repeating the sequence (1,2) down the column, so fuck everything.
