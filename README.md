@@ -83,7 +83,7 @@ Note also that R has a concept of arrays and matrices. An array is a one-dimensi
 Integer and double atomic vectors are both numeric atomic vectors, i.e. `is.numeric(x)` is `TRUE`. Complex atomic vectors, duh???, are not numeric.
 
 ## Dealing with strings
-When you see "character atomic vector" you should think "string atomic vector." `length('foo bar')` yields 1 because you have created a character atomic vector of length one, containing the character value 'foo bar'. (Yes. I know.) `length(c('foo', 'bar', 'baz'))` is 3.
+When you see "character atomic vector" you should think "string atomic vector." `length('foo bar')` yields 1 because you have created a character atomic vector of length one, containing the character value 'foo bar'. (Yes. I know.) `length(c('foomp', 'barb', 'bazzle'))` is 3.
 
 String primitives, which is to say the elements of a character atomic vector, are immutable.
 
