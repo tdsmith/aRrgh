@@ -6,17 +6,17 @@ R is a shockingly dreadful language for an exceptionally useful data analysis en
 
 But there are a lot of great tools that are built in R. Bioconductor and ggplot2 are first-in-class. Sometimes there's aught to do but grin and bear (though never without a side of piss and moan).
 
-The documentation is inanely bad. I can't explain it. This document is my attempt to explain the language to myself; I'm publishing it in hopes that others will find it useful.
+The documentation is inanely bad. I can't explain it. aRrgh is my attempt to explain the language to myself. aRrgh exists as a living document and will continue to grow -- it got to a point where it seemed like it was probably useful so I decided to toss it on the web. Publishing on Github is an experiment but bug reports and pull requests are welcome.
 
 # Basic syntax
 
-* ; or newline separate commands.
+* `;` or newline separate commands.
 * Whitespace is meaningless.
-* Use hash-comments (# to end of line).
+* Use hash-comments (`#` to end of line).
 * Variable typing is weak and dynamic; variables are not declared before use.
 * Assignment looks stupid. I shit you not; these all have the equivalent effect of storing the value of `b` in `a`: `a <- b; b -> a; assign("a", b); a = b;` Sometimes you can't use `=`, though. I don't know when or why!! I just use `<-`.
 * Dots in identifier names are just part of the identifier. They are not scope operators. They are not operators at all. They are just a legal character to use in the names of things. They are often used where a normal human being would use underscores, since underscores were assignment operators in S, which I promise you don't even want to think about.
-* It's okay to think of R's `$` operator as like . in C-like languages. If you'd write `object.instance_variable` in C, you'd maybe write `object$instance.variable` in R.
+* If you squint, `$` acts kind of like the `.` scope operator in C-like languages, at least for data frames. If you'd write `struct.instance_variable` in C, you'd maybe write `frame$column.variable` in R.
 * Array indexing is base-one. Accessing the zeroth element does not give an error but is never useful. More on this in the Vectors section.
 * Be careful with for loops. The syntax is vaguely Pythonic: `for(i in <sequence>) { do something; }`. You may be tempted to use the sequence operator, `:`, which is akin to `range()` in Python, to generate a list of integers to iterate over. Two cautions here. First, this is rarely the R idiom to use; as in MATLAB, vector operations are usually faster and harder to screw up (see **important caveat** in "vector operations" below) than iteration. Reference the third chapter of the [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf) for advice on vectorizing. Second, if you do something like `i in 1:foo`, the **wrong thing** will happen if `foo` ever holds the value 0. `1:0` is the sequence (1, 0), since the `:` operator can and will count backwards. Always check whether `foo` is zero before you run your loop.
 * Otherwise, fundamentals are just C-like enough to lull you into a false sense of security.
@@ -35,7 +35,7 @@ It looks like I'm presenting this out of order but it'll all make sense in the e
 ## Boolean primitives and special values
 TRUE, FALSE, and NA are special logic values. (NULL is also defined and is a special vector of length zero.) Do not ever use T and F for TRUE and FALSE. You will see people doing it but they're assholes and not your friend; T and F are just variables with default values. Set `T <- F` and source their code and laugh as it burns.
 
-This also means that you shouldn't ever assign useful quantities to variables named T and F. Sorry. Other variable names that you cannot use are c, q, s, t, C, D, and I. :(
+This also means that you shouldn't ever assign useful quantities to variables named T and F. Sorry. Other variable names that you cannot use are c, q, s, t (!), C, D, and I. :(
 
 NA means "not available" and is a filler quantity for missing values. The result of all comparisons with `NA` is `NA`. Use `is.na(x)` to test whether a value is NA, not `x == NA`. `NA` has undefined truth value, and raises an error:
 
@@ -85,13 +85,13 @@ Integer and double atomic vectors are both numeric atomic vectors, i.e. `is.nume
 ## Dealing with strings
 When you see "character atomic vector" you should think "string atomic vector." `length('foo bar')` yields 1 because you have created a character atomic vector of length one, containing the character value 'foo bar'. (Yes. I know.) `length(c('foo', 'bar', 'baz'))` is 3.
 
-String primitives, which is to say the elements of a character atomic vector (which elements, again!, are actually strings and not characters), are immutable.
+String primitives, which is to say the elements of a character atomic vector, are immutable.
 
 Some other things that are true:
 
 * `length('foo')` is 1 (see above).
 * `nchar('foo')` is 3.
-* Strings are indexed with `substr(x, start, stop)`. Base one, rememeber: `substr('foo', 1, 1)` is 'f'. `substr('foo', 2, 3)` is 'oo'.
+* Strings are indexed with `substr(x, start, stop)`. Base one, remember: `substr('foo', 1, 1)` is 'f'. `substr('foo', 2, 3)` is 'oo'.
 * You can wrap strings in either single or double quotes. Escape with backslashes as in C, e.g. `'Tim\'s bad attitude.'`
 * `paste()` is useful for a variety of string-concatenation operations.
 
