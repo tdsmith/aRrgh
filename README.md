@@ -6,19 +6,19 @@ R is a shockingly dreadful language for an exceptionally useful data analysis en
 
 But there are a lot of great tools that are built in R. Bioconductor and ggplot2 are first-in-class. Sometimes there's aught to do but grin and bear (though never without a side of piss and moan).
 
-The documentation is inanely bad. I can't explain it. aRrgh is my attempt to explain the language to myself. aRrgh exists as a living document and will continue to grow -- it got to a point where it seemed like it was probably useful so I decided to toss it on the web. Publishing on Github is an experiment but bug reports and pull requests are welcome.
+The documentation is inanely bad. I can't explain it. aRrgh is my attempt to explain the language to myself. aRrgh exists as a living document and will continue to grow -- it is not complete, but it got to a point where it seemed like it was probably useful so I decided to toss it on the web. It should be correct and it's a bug if it isn't. Publishing on Github is an experiment; bug reports and pull requests are welcome and preferred over email when appropriate.
 
-# Basic syntax
+# Basic syntax and gotchas
 
 * `;` or newline separate commands.
-* Whitespace is meaningless.
 * Use hash-comments (`#` to end of line).
 * Variable typing is weak and dynamic; variables are not declared before use.
-* Assignment looks stupid. I shit you not; these all have the equivalent effect of storing the value of `b` in `a`: `a <- b; b -> a; assign("a", b); a = b;` Sometimes you can't use `=`, though. I don't know when or why!! I just use `<-`.
+* Whitespace is meaningless, unless it isn't. Some [parsing ambiguities](http://shape-of-code.coding-guidelines.com/2012/02/29/parsing-r-code-freedom-of-expression-is-not-always-a-good-idea/) are resolved by considering whitespace around operators. See and despair: `x<-y` (assignment) is parsed differently than `x < -y` (comparison)!
+* Speaking of which, assignment looks stupid. I shit you not; these all have the equivalent effect of storing the value of `b` in `a`: `a <- b; b -> a; assign("a", b); a = b;`. There are [subtle differences](http://stackoverflow.com/questions/1741820/assignment-operators-in-r-and) and [some authorities](http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html#assignment) prefer `<-` for assignment but I'm increasingly convinced that they are wrong; `=` is always safer. R doesn't allow expressions of the form `if (c = testSomething())` but does allow `if (c <- testSomething())`. To assign to globals, though, use `<<-`.
 * Dots in identifier names are just part of the identifier. They are not scope operators. They are not operators at all. They are just a legal character to use in the names of things. They are often used where a normal human being would use underscores, since underscores were assignment operators in S, which I promise you don't even want to think about.
 * If you squint, `$` acts kind of like the `.` scope operator in C-like languages, at least for data frames. If you'd write `struct.instance_variable` in C, you'd maybe write `frame$column.variable` in R.
 * Array indexing is base-one. Accessing the zeroth element does not give an error but is never useful. More on this in the Vectors section.
-* Be careful with for loops. The syntax is vaguely Pythonic: `for(i in <sequence>) { do something; }`. You may be tempted to use the sequence operator, `:`, which is akin to `range()` in Python, to generate a list of integers to iterate over. Two cautions here. First, this is rarely the R idiom to use; as in MATLAB, vector operations are usually faster and harder to screw up (see **important caveat** in "vector operations" below) than iteration. Reference the third chapter of the [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf) for advice on vectorizing. Second, if you do something like `i in 1:foo`, the **wrong thing** will happen if `foo` ever holds the value 0. `1:0` is the sequence (1, 0), since the `:` operator can and will count backwards. Always check whether `foo` is zero before you run your loop.
+* Be careful with for loops. The syntax is vaguely Pythonic: `for(i in <sequence>) { do something; }`. You may be tempted to use the sequence operator, `:`, which is akin to `range()` in Python, to generate a list of integers to iterate over. Two cautions here. First, this is rarely the R idiom to use; as in MATLAB, vector operations are usually faster and harder to screw up than iteration (see **important caveat** in "vector operations" below). Reference the third chapter of the [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf) for advice on vectorizing. Second, if you do something like `i in 1:foo`, the **wrong thing** will happen if `foo` ever holds the value 0. `1:0` is the sequence (1, 0), since the `:` operator can and will count backwards. Always check whether `foo` is zero before you run your loop if you use `:`. If you're iterating over the incides of a sequence, always use `seq_along(x)` in preference to `1:length(x)`.
 * Otherwise, fundamentals are just C-like enough to lull you into a false sense of security.
 
 ## Helping yourself
@@ -59,7 +59,7 @@ The atomic vector is the simplest R data type. Atomic vectors are linear vectors
 Haha, what is `c()`? It is a function, "c" means "concatenate," and it assembles the vectors you pass into it end-to-end. "But I passed in numerical primitives," you might think. Wrong! All naked numbers are double-width floating-point atomic vectors of length one. You're welcome. Consequences of this include:
 
 * `a` is a double-typed atomic vector.
-* `is.integer(2)` yields FALSE, because `2` is interpreted as a floating-point value.
+* `is.integer(2)` yields FALSE, because `2` is interpreted as a floating-point value. This has implications for testing equality! You can type an integer literal by suffixing `L`, as in `2400L`.
 * `is.integer(as.integer(c(1,2)))` yields TRUE, because you gave it an integer atomic vector.
 
 Index this like a[1] ... a[4]. **All indexing in R is base-one.** Note that **no error is thrown** if you try to access a[0]; it always returns a numeric atomic vector of length zero, written `numeric(0)`. Unaccountably, nobody's in jail for that decision, yet. Indexing past the end of the array, by contrast, yields NA. Assigning past the end of the vector (i.e. `a[10] <- 5`) works and extends the vector, filling with NA.
@@ -93,7 +93,8 @@ Some other things that are true:
 * `nchar('foo')` is 3.
 * Strings are indexed with `substr(x, start, stop)`. Base one, remember: `substr('foo', 1, 1)` is 'f'. `substr('foo', 2, 3)` is 'oo'.
 * You can wrap strings in either single or double quotes. Escape with backslashes as in C, e.g. `'Tim\'s bad attitude.'`
-* `paste()` is useful for a variety of string-concatenation operations.
+* `paste()` is useful for a variety of string-concatenation operations. There is also a `sprintf()` function.
+* A veteran R user suggests that the stringr or Biostrings packages may ease the pain of string handling in R. I'd be more inclined to write anything substantial in Python, but horses for courses, etc.
 
 ## Vector operations
 
@@ -189,7 +190,7 @@ Don't add data to the frame a row at a time. This is the second level of the [R 
 # External code
 
 * Execute external code in the current workspace using `source('filename.R')`.
-* Pull in a library with `library(foo)` or `library('foo')` or `require(foo)` or `require('foo')`.
+* Pull in a library with `library(foo)` or `library('foo')` or `require(foo)` or `require('foo')`. The return value of `require()` is `TRUE` if loading the library was successful but failure to load the library isn't fatal. `library()` just doesn't tell you whether it worked or not.
 
 # Plyr
 
@@ -197,3 +198,5 @@ Don't add data to the frame a row at a time. This is the second level of the [R 
 
 # Colophon
 © Tim Smith 2012. This work is made available under a [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US) License.
+
+Thanks to [Kevin Ushey](https://twitter.com/kevin_ushey) for helpful discussions! Anything you don't like about this document is my fault and not his.
