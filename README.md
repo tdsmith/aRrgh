@@ -33,7 +33,7 @@ The [Hyperpolyglot](http://hyperpolyglot.org/numerical-analysis) page comparing 
 It looks like I'm presenting this out of order but it'll all make sense in the end.
 
 ## Boolean primitives and special values
-TRUE, FALSE, and NA are special logic values. (NULL is also defined and is a special vector of length zero.) Do not ever use T and F for TRUE and FALSE. You will see people doing it but they're assholes and not your friend; T and F are just variables with default values. Set `T <- F` and source their code and laugh as it burns.
+`TRUE`, `FALSE`, and `NA` are special logic values. (`NULL` is also defined and is a special vector of length zero.) Do not ever use T and F for `TRUE` and `FALSE`. You will see people doing it but they're assholes and not your friend; T and F are just variables with default values. Set `T <- F` and source their code and laugh as it burns.
 
 This also means that you shouldn't ever assign useful quantities to variables named T and F. Sorry. Other variable names that you cannot use are c, q, s, t (!), C, D, and I. :(
 
@@ -52,7 +52,7 @@ Jesus Christ, here we go.
 
 > Important, re: notation! When you see a reference to a vector, the writers may well be talking specifically about an **atomic** vector. There is another important data type called a list or generic vector, with (naturally) different semantics. Lists are also vectors, but lists are not atomic vectors.
 
-The atomic vector is the simplest R data type. Atomic vectors are an array of a single data type, like an STL Vector in C++. There is no useful literal syntax for this fundamental data type. To create one of these stupid beasts, assign like:
+The atomic vector is the simplest R data type. Atomic vectors are linear vectors of a single primitive type, like an STL Vector in C++. There is no useful literal syntax for this fundamental data type. To create one of these stupid beasts, assign like:
 
     a <- c(1,2,3,4)
 
