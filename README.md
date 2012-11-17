@@ -14,7 +14,7 @@ The documentation is inanely bad. I can't explain it. aRrgh is my attempt to exp
 * Use hash-comments (`#` to end of line).
 * Variable typing is weak and dynamic; variables are not declared before use.
 * Whitespace is meaningless, unless it isn't. Some [parsing ambiguities](http://shape-of-code.coding-guidelines.com/2012/02/29/parsing-r-code-freedom-of-expression-is-not-always-a-good-idea/) are resolved by considering whitespace around operators. See and despair: `x<-y` (assignment) is parsed differently than `x < -y` (comparison)!
-* Speaking of which, assignment looks stupid. I shit you not; these all have the equivalent effect of storing the value of `b` in `a`: `a <- b; b -> a; assign("a", b); a = b;`. There are [subtle differences](http://stackoverflow.com/questions/1741820/assignment-operators-in-r-and) and [some authorities](http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html#assignment) prefer `<-` for assignment but I'm increasingly convinced that they are wrong; `=` is always safer. R doesn't allow expressions of the form `if (c = testSomething())` but does allow `if (c <- testSomething())`. To assign to globals, though, use `<<-`.
+* Speaking of which, assignment looks stupid. I shit you not; these all have the equivalent effect of storing the value of `b` in `a`: `a <- b; b -> a; assign("a", b); a = b;`. There are [subtle differences](http://stackoverflow.com/questions/1741820/assignment-operators-in-r-and) and [some authorities](http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html#assignment) prefer `<-` for assignment but I'm increasingly convinced that they are wrong; `=` is always safer. R doesn't allow expressions of the form `if (a = testSomething())` but does allow `if (a <- testSomething())`. To assign to globals, though, use `<<-`.
 * Dots in identifier names are just part of the identifier. They are not scope operators. They are not operators at all. They are just a legal character to use in the names of things. They are often used where a normal human being would use underscores, since underscores were assignment operators in S, which I promise you don't even want to think about.
 * If you squint, `$` acts kind of like the `.` scope operator in C-like languages, at least for data frames. If you'd write `struct.instance_variable` in C, you'd maybe write `frame$column.variable` in R.
 * Array indexing is base-one. Accessing the zeroth element does not give an error but is never useful. More on this in the Vectors section.
@@ -137,7 +137,6 @@ Let's take an example data set and put it back together:
     4  0.6  0.538
     5  0.7  0.626
     6  0.9  0.782
-    > ?Formaldehyde
     > mycarb <- Formaldehyde$carb
     > OD <- Formaldehyde$optden
     > my.new.frame <- data.frame(carb=mycarb, od=OD)
