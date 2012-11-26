@@ -62,7 +62,7 @@ Haha, what is `c()`? It is a function, "c" means "concatenate," and it assembles
 * `is.integer(2)` yields FALSE, because `2` is interpreted as a floating-point value. This has implications for testing equality! You can type an integer literal by suffixing `L`, as in `2400L`.
 * `is.integer(as.integer(c(1,2)))` yields TRUE, because you gave it an integer atomic vector.
 
-Index this like a[1] ... a[4]. **All indexing in R is base-one.** Note that **no error is thrown** if you try to access a[0]; it always returns a numeric atomic vector of length zero, written `numeric(0)`. Unaccountably, nobody's in jail for that decision, yet. Indexing past the end of the array, by contrast, yields NA. Assigning past the end of the vector (i.e. `a[10] <- 5`) works and extends the vector, filling with NA.
+Index this like a[1] ... a[4]. **All indexing in R is base-one.** Note that **no error is thrown** if you try to access a[0]; it always returns a numeric atomic vector of length zero, written `numeric(0)`. Unaccountably, nobody's in jail for that decision, yet. Indexing past the end of the array, by contrast, yields NA. Assigning past the end of the vector (i.e. `a[10] <- 5`) works and extends the vector, filling with NA. (To get an zero-filled vector of a particular length and type to start with, write something like `a <- integer(42)`.).
 
 `numeric(0)` has undefined truth value, which raises an error:
 
@@ -75,12 +75,16 @@ Note also that R has a concept of arrays and matrices. An array is a one-dimensi
 
 * logical (contains TRUE, FALSE, NA)
 * integer
-* double
+* double (`real` is a deprecated alias)
 * complex (as in complex numbers; write as `0+0i`)
 * character (pronounced "string" -- see next section)
-* raw (no idea what this is)
+* raw (for bitstreams; printed in hex by default. Logical operators magically operate bitwise on these.)
 
 Integer and double atomic vectors are both numeric atomic vectors, i.e. `is.numeric(x)` is `TRUE`. Complex atomic vectors, duh???, are not numeric.
+
+If you ask for a `numeric` vector using `numeric(42)` or `as.numeric()`, you will get a `double` vector. A perfect R-ism is that if you ask for a `single` vector, you'll still get a double-precision float vector, though it will have a flag set so that it will be passed into C APIs as single-width `float`s instead of `double`s. There is no single-precision storage option in R.
+
+Check the type of your vector with `typeof(x)`, which returns a string.
 
 ## Dealing with strings
 When you see "character atomic vector" you should think "string atomic vector." `length('foo bar')` yields 1 because you have created a character atomic vector of length one, containing the character value 'foo bar'. (Yes. I know.) `length(c('foomp', 'barb', 'bazzle'))` is 3.
@@ -102,7 +106,7 @@ You can do vector math in R, which always operates elementwise, like the dot ope
 
 ## Data frames
 
-Data frames are far and away the most useful structures in R in routine use for handling tabular data. They are a type of list vector, about which more later, so don't think about it yet. They act a little bit like a matrix. You've already exhausted many of the surprising parts of R by the time you get to data frames. They're pretty well-behaved, considering.
+Data frames are far and away the most useful structures in R in routine use for handling tabular data. They are a type of list vector, about which more later, so don't think about it yet. They act a little bit like a matrix. You've already exhausted many of the surprising parts of R by the time you get to data frames, so they're pretty well-behaved, considering.
 
 A feature of R that is useful for pedagogy but otherwise unholy is that the default search path (at least for my install!) is polluted with example datasets from the `datasets` package. Run `data()` at the interpreter to take a peek. Most of these are data frames. I use the `Formaldehyde` frame below.
 
@@ -123,7 +127,7 @@ The [R Data Import/Export page](http://cran.stat.ucla.edu/doc/manuals/R-data.htm
 
 #### From the clipboard
 
-Grabbing data from the clipboard is no better than you should have expected. `read.table('clipboard',…)` works on Windows (so don't name your input files 'clipboard'). Mac users will sigh and resort to the inelegant but functional `read.table(pipe('pbpaste'),…)`. `write.table()` works similarly (use `pbcopy` instead of `pbpaste` on OS X).
+Grabbing data from the clipboard is no better than you should have expected. `read.table('clipboard',…)` works on Windows (so don't name your input files 'clipboard'). Mac users will sigh and resort to the inelegant but functional `read.table(pipe('pbpaste'),…)`. `write.table()` works similarly; Mac users should pipe through `pbpaste` to write data back.
 
 #### From vectors in your workspace
 
@@ -179,12 +183,12 @@ You can see a list of columns with `names(frame)`. You rename columns by, litera
     > a$OD
     [1] 0.086 0.269 0.446 0.538 0.626 0.782
 
-Would you like to know how many rows you have in your data frame? Use `nrow(foo)`. Do not use `length(foo)`, which will tell you how many columns you have; if you actually want that number, you can use `ncol(foo)` for clarity. `dim(foo)` will give you a vector containing both dimensions.
+Would you like to know how many rows you have in your data frame? Use `nrow(foo)`. Do not use `length(foo)`, which will for reasons unexplained tell you how many columns you have; if you actually want that number, you can use `ncol(foo)` for clarity. `dim(foo)` will give you a vector containing both dimensions.
 
 ### Adding data to frames
 Adding columns is easy: `a <- Formaldehyde; a$bar <- seq(6)` creates a new column `bar`. Refreshingly, `a$bar <- seq(100)` fails, *BUT* `a$bar <- 1:2` works silently, repeating the sequence (1,2) down the column, so fuck everything.
 
-Don't add data to the frame a row at a time. This is the second level of the [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf). Create your data frame from lists that are big enough to contain all of the data you expect the frame to contain, perhaps filling with `NA`. You may, however, merge two data frames vertically using `rbind()`.
+Don't add data to the frame a row at a time. It is slower than molasses and just as [deadly](http://en.wikipedia.org/wiki/Boston_Molasses_Disaster); this is the second level of the [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf). Create your data frame from lists that are big enough to contain all of the data you expect the frame to contain, perhaps filling with `NA`. You may, however, merge two data frames vertically using `rbind()`.
 
 # External code
 
