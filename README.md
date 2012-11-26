@@ -62,7 +62,7 @@ Haha, what is `c()`? It is a function, "c" means "concatenate," and it assembles
 * `is.integer(2)` yields FALSE, because `2` is interpreted as a floating-point value. This has implications for testing equality! You can type an integer literal by suffixing `L`, as in `2400L`.
 * `is.integer(as.integer(c(1,2)))` yields TRUE, because you gave it an integer atomic vector.
 
-Index this like a[1] ... a[4]. **All indexing in R is base-one.** Note that **no error is thrown** if you try to access a[0]; it always returns a numeric atomic vector of length zero, written `numeric(0)`. Unaccountably, nobody's in jail for that decision, yet. Indexing past the end of the array, by contrast, yields NA. Assigning past the end of the vector (i.e. `a[10] <- 5`) works and extends the vector, filling with NA. (To get an zero-filled vector of a particular length and type to start with, write something like `a <- integer(42)`.).
+Index this like a[1] ... a[4]. **All indexing in R is base-one.** Note that **no error is thrown** if you try to access a[0]; it always returns a numeric atomic vector of length zero, written `numeric(0)`. Unaccountably, nobody's in jail for that decision, yet. Indexing past the end of the array, by contrast, yields NA. Assigning past the end of the vector (i.e. `a[10] <- 5`) works and extends the vector, filling with NA. (To get an zero-filled vector of a particular length and type to start with, write something like `a <- integer(42)`.)
 
 `numeric(0)` has undefined truth value, which raises an error:
 
@@ -127,7 +127,7 @@ The [R Data Import/Export page](http://cran.stat.ucla.edu/doc/manuals/R-data.htm
 
 #### From the clipboard
 
-Grabbing data from the clipboard is no better than you should have expected. `read.table('clipboard',…)` works on Windows (so don't name your input files 'clipboard'). Mac users will sigh and resort to the inelegant but functional `read.table(pipe('pbpaste'),…)`. `write.table()` works similarly; Mac users should pipe through `pbpaste` to write data back.
+Grabbing data from the clipboard is no better than you should have expected. `read.table('clipboard',…)` works on Windows (so don't name your input files 'clipboard'). Mac users will sigh and resort to the inelegant but functional `read.table(pipe('pbpaste'),…)`. `write.table()` works similarly; Mac users should pipe through `pbcopy` to write data back.
 
 #### From vectors in your workspace
 
