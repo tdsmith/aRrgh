@@ -86,7 +86,7 @@ If you ask for a `numeric` vector using `numeric(42)` or `as.numeric(x)`, you wi
 
 Check the type of your vector with `typeof(x)`, which returns a string.
 
-A potential source of mischief is that if you try to place a value of a particular type into an atomic array of a different type, R will — silently, natch —recast either the value you are trying to add or the entire vector (!) to the more permissive type. Witness:
+A potential source of mischief is that if you try to place a value of a particular type into an atomic array of a different type, R will—silently, natch—recast either the value you are trying to add or the entire vector (!) to the more permissive type. Witness:
 
     > a <- c(1L, 2L, 3L); typeof(a)
     [1] "integer"
