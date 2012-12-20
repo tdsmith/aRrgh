@@ -52,8 +52,9 @@ NULL, by the way, also has undefined truth value, raising an error if you test i
 
 The slightly awkward way of getting around `NA` and `NULL` values in `if` statements is to use the `isTRUE` function:
 
-    if( isTRUE(NA) ) ## returns FALSE
-    if( isTRUE(NULL) )
+    > isTRUE(NA); isTRUE(NULL)
+    [1] FALSE
+    [1] FALSE
 
 # Atomic vectors
 Jesus Christ, here we go.
@@ -132,7 +133,9 @@ When indexing matrices (or 2D arrays), we typically think of it in terms as `x[<
 
 * If we leave `<row>` empty and specify `<col>`, we are essentially saying "give me _all_ of the rows for the given `<col>`s." Eg: `x[, c(1,2)]` gives columns 1 and 2 of `x`. Vice-versa for leaving `<col>` empty.
 * We can pass in boolean vectors. In these situations it is helpful to internally translate `[` to the 'such that' operator. Eg: `x[ x[,1] > 4, ]` means "give me all the rows such that the entry in the first column is greater than 4 (and from those rows, get all the columns)".
-* R will down-convert any element subsetted in this way to a 1-dimensional vector. Be very careful. Prevent it with the `drop=FALSE` argument:
+* R will down-convert any element subsetted in this way to a 1-dimensional vector. Be very careful. Prevent it with the `drop=FALSE` argument.
+
+See:
 
     > dat <- matrix(1:4, nrow=2, ncol=2)
     > typeof(dat)
@@ -159,7 +162,7 @@ Higher-dimensional arrays are available as well, and indexing rules follow in a 
 
 Data frames are far and away the most useful structures in R in routine use for handling tabular data. They are a type of list vector, about which more later, so don't think about it yet. They act a little bit like a matrix. You've already exhausted many of the surprising parts of R by the time you get to data frames, so they're pretty well-behaved, considering.
 
-A feature of R that is useful for pedagogy but otherwise unholy is that the default search path (at least for my install!) is polluted with example datasets from the `datasets` package. Run `data()` at the interpreter to take a peek. Most of these are data frames. I use the `Formaldehyde` frame below.
+A feature of R that is useful for pedagogy but otherwise unholy is that the default search path (at least for my install!) is polluted with example datasets from the `datasets` package. Run `data()` at the interpreter to take a peek. Most of these are data frames. I use the `Formaldehyde` frame below. Check out what's in your search path with `search()`. Whenever you call a variable reference, R searches through these 'environments', in order from first to last.
 
 If anyone ever suggests that you use `attach()` while working with data frames, consider them pityingly for a moment and proceed as before. Do not take their advice.
 
@@ -216,6 +219,8 @@ You can also use the `text` argument, or create a `textConnection()` object. Try
 There are a few functions which you should use extensively in figuring out what, exactly, your data frame looks like internally.
 * `str` gives you the 'structure' of your data frame, and prints in a nice format the number of observations (rows), number of variables (columns), the variables within and their internal types. It is one of the most useful functions you will ever use.
 * `head` and `tail` can give you a quick look at the heads and tails of your data frame.
+
+eg:
 
     dat <- data.frame( x=c(1, 2, 3), y=c(1L, 2L, 3L), z=letters[1:3] )
     ## yes, that's right, 'letters' is a builtin vector of letters. R supremacy.
@@ -477,6 +482,4 @@ So, save yourself the grief and just generate a new factor with levels in the de
 Moral of the story: **only use factors when you explicitly mean to, and stop R from coercing your character vectors into factors when you don't.**
 
 # Colophon
-© Tim Smith 2012. This work is made available under a [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US) License.
-
-Thanks to [Kevin Ushey](https://twitter.com/kevin_ushey) for helpful discussions! Anything you don't like about this document is my fault and not his.
+© Tim Smith 2012. This work is made available under a [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US) License. Some additional content added by Kevin Ushey.
