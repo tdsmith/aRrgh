@@ -252,7 +252,11 @@ Be aware of the difference between `frame[foo]`, `frame[[foo]]`, and `frame[foo,
 
 Moral of the story? If you want to subset columns from a data frame, use `frame[<names>]`, _not_ `frame[,c(<names>)]`.
 
-You can see a list of columns with `names(frame)`. You rename columns by, spookily, assigning into `names(frame)`. This is because R secretly defines a `names<-` function, which is called and internally assigns names when caling eg. `names(frame) <- c("foo", "bar")`. That call is identical to `frame <- ``names<-``(frame, c("foo", "bar"))`. Almost all assignment operators act like this under the hood.
+You can see a list of columns with `names(frame)`. You rename columns by, spookily, assigning into `names(frame)`. This is because R secretly defines a `names<-` function, which is called and internally assigns names when caling eg. `names(frame) <- c("foo", "bar")`. That call is identical to:
+
+    frame <- `names<-`(frame, c("foo", "bar")). 
+    
+Almost all assignment operators act like this under the hood.
 
 **R is secretly just an infixed LISPy language where everything is an object and keywords are just functions**
 
