@@ -26,7 +26,7 @@ The goal of the document is to describe R's data types and structures while offe
 * Execute external code in the current workspace using `source('filename.R')`.
 * Pull in a library with `library(foo)` or `library('foo')` or `require(foo)` or `require('foo')`. `library()` is actually more stringent, and dies on an error if the library can't be found. The return value of `require()` is `TRUE` if loading the library was successful but failure to load the library is a warning and isn't fatal.
 * Otherwise, fundamentals are just C-like enough to lull you into a false sense of security.
-* Deep down, everything in R is a function, though. R is pretty scheme-y and LISP-y under the hood. Once can write `"+"(2, 3)` to call the `+` operator on numbers 2 and 3, for example! Even crazier, `"for"( i, 1:10, print(i^2) )` shows that the keywords are functions themselves.
+* Deep down, everything in R is a function, though. R is pretty scheme-y and LISP-y under the hood. One can write `"+"(2, 3)` to call the `+` operator on numbers 2 and 3, for example! Even crazier, `"for"( i, 1:10, print(i^2) )` shows that the keywords are functions themselves.
 
 # Helping yourself
 
@@ -38,7 +38,15 @@ The [Hyperpolyglot](http://hyperpolyglot.org/numerical-analysis) page comparing 
 
 
 # Boolean primitives and special values
-`TRUE`, `FALSE`, and `NA` are special logic values. (`NULL` is also defined and is a special vector of length zero.) Do not ever use T and F for `TRUE` and `FALSE`. You will see people doing it but they're assholes and not your friend; T and F are just variables with default values. Set `T <- F` and source their code and laugh as it burns. As a side note, `"+" <- function(x, y) { sum(x, y, 2*.Machine$double.eps) }` is an even more terrible thing to do. Yes, you can re-define how the `+` operator works in the global environment. You can also re-define `for`, `if`, and all the others. R lets you ruin yours / others lives if you really want to. `"for" <- function(x, y, z) { return( runif(1) ) }; for( i in 1:10 ) { print(i) } ## whaaat!?`
+`TRUE`, `FALSE`, and `NA` are special logic values. (`NULL` is also defined and is a special vector of length zero.) Do not ever use T and F for `TRUE` and `FALSE`. You will see people doing it but they're assholes and not your friend; T and F are just variables with default values. Set `T <- F` and source their code and laugh as it burns. 
+
+Secure yourself a special place in hell with `"+" <- function(x, y) { sum(x, y, 2*.Machine$double.eps) }`. Yes, you can re-define how the `+` operator works in the global environment. 
+
+You can also re-define `for`, `if`, and all the others. R lets you ruin yours / others lives if you really want to.
+
+    > "for" <- function(x, y, z) { return( runif(1) ) }
+    > for( i in 1:10 ) { print(i) }
+    [1] 0.797457
 
 This also means that you shouldn't ever assign useful quantities to variables named T and F. Sorry. Other variable names that you cannot use are c, q, s, t (!), C, D, and I. Or, if you do it, do it inside a local scope / environment / in a function, so you don't mask these globally.
 
