@@ -213,3 +213,5 @@ Don't add data to the frame a row at a time. It is slower than molasses and just
 © Tim Smith 2012. This work is made available under a [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US) License.
 
 Thanks to [Kevin Ushey](https://twitter.com/kevin_ushey) for helpful discussions! Anything you don't like about this document is my fault and not his.
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/e0799fb6c38624dd1955cfbc75756167 "githalytics.com")](http://githalytics.com/tdsmith/aRrgh)
