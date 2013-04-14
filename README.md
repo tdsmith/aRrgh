@@ -1,6 +1,8 @@
 # aRrgh: a newcomer's (angry) guide to data types in R
 [Tim Smith](http://tim-smith.us) \<arrgh@tim-smith.us\>, [@biotimylated](http://twitter.com/biotimylated)
 
+with Kevin Ushey \<kevinushey@gmail.com\>, [@kevin_ushey](http://twitter.com/kevin_ushey)
+
 # Introduction
 R is a shockingly dreadful language for an exceptionally useful data analysis environment. The more you learn about the R language, the worse it will feel. The development environment suffers from literally decades of accretion of stupid hacks from a community containing, to a first-order approximation, zero software engineers. R makes me want to kick things almost every time I use it.
 
@@ -201,7 +203,7 @@ You can see a list of columns with `names(frame)`. You rename columns by, spooki
 Would you like to know how many rows you have in your data frame? Use `nrow(foo)`. Do not use `length(foo)`, which unhelpfully tells you how many columns you have (it is describing the length of the list object containing the column vectors!); if you actually want that number, you can use `ncol(foo)` for clarity. `dim(foo)` will give you a vector containing both dimensions.
 
 ## Adding data to frames
-Adding columns is easy: `a <- Formaldehyde; a$bar <- seq(6)` creates a new column `bar`. Refreshingly, `a$bar <- seq(100)` fails, *BUT* `a$bar <- 1:2` works silently, repeating the sequence (1,2) down the column, so fuck everything.
+Adding columns is easy: `a <- Formaldehyde; a$bar <- seq(6)` creates a new column `bar`. Refreshingly, `a$bar <- seq(100)` fails (since 100 does not divide 6 evenly), *BUT* `a$bar <- 1:2` works silently, repeating the sequence (1,2) down the column, so fuck everything.
 
 Don't add data to the frame a row at a time. It is slower than molasses and just as [deadly](http://en.wikipedia.org/wiki/Boston_Molasses_Disaster); this is the second level of the [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf). Create your data frame from lists that are big enough to contain all of the data you expect the frame to contain, perhaps filling with `NA`. You may, however, merge two data frames vertically using `rbind()`.
 
@@ -210,8 +212,8 @@ Don't add data to the frame a row at a time. It is slower than molasses and just
 # Factors
 
 # Colophon
-© Tim Smith 2012. This work is made available under a [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US) License.
+© Tim Smith 2012-3. This work is made available under a [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US) License.
 
-Thanks to [Kevin Ushey](https://twitter.com/kevin_ushey) for helpful discussions! Anything you don't like about this document is my fault and not his.
+If you enjoyed this, you will probably enjoy [PHP: A Fractal of Bad Design](http://me.veekun.com/blog/2012/04/09/php-a-fractal-of-bad-design/), which is even more cathartic.
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/e0799fb6c38624dd1955cfbc75756167 "githalytics.com")](http://githalytics.com/tdsmith/aRrgh)
