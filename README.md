@@ -54,6 +54,8 @@ NULL, by the way, also has undefined truth value, raising an error if you test i
     > if(NULL) print("Nope");
     Error in if (NULL) print("Nope") : argument is of length zero
 
+If you need to test the truth value of some `x` that may sometimes be `NA` or have zero length, you can test the charming and concise expression `identical(TRUE, as.logical(x))`.
+
 # Atomic vectors
 Jesus Christ, here we go.
 
