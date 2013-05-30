@@ -18,13 +18,14 @@ The goal of the document is to describe R's data types and structures while offe
 * Use hash-comments (`#` to end of line).
 * Variable typing is weak and dynamic; variables are not declared before use. Like PHP and Javascript, variables have function (not block) scope.
 * Whitespace is meaningless, unless it isn't. Some [parsing ambiguities](http://shape-of-code.coding-guidelines.com/2012/02/29/parsing-r-code-freedom-of-expression-is-not-always-a-good-idea/) are resolved by considering whitespace around operators. See and despair: `x<-y` (assignment) is parsed differently than `x < -y` (comparison)!
-* Speaking of which, assignment looks stupid. I shit you not; these all have the equivalent effect of storing the value of `b` in `a`: `a <- b; b -> a; assign("a", b); a = b;`. There are [subtle differences](http://stackoverflow.com/questions/1741820/assignment-operators-in-r-and) and [some authorities](http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html#assignment) prefer `<-` for assignment but I'm increasingly convinced that they are wrong; `=` is always safer. R doesn't allow expressions of the form `if (a = testSomething())` but does allow `if (a <- testSomething())`. To assign to globals, though, use `<<-`.
+* Speaking of which, assignment looks stupid. I shit you not; these all have the equivalent effect of storing the value of `b` in `a`: `a <- b; b -> a; assign("a", b); a = b;`. There are [subtle differences](http://stackoverflow.com/questions/1741820/assignment-operators-in-r-and) and [some authorities](http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html#assignment) prefer `<-` for assignment but I'm increasingly convinced that they are wrong; `=` is always safer. R doesn't allow expressions of the form `if (a = testSomething())` but does allow `if (a <- testSomething())`. To assign to *globals*, though, use `<<-`.
 * Dots in identifier names are just part of the identifier. They are not scope operators. They are not operators at all. They are just a legal character to use in the names of things. They are often used where a normal human being would use underscores, since underscores were assignment operators in S, which I promise you don't even want to think about.
 * If you squint, `$` acts kind of like the `.` scope operator in C-like languages, at least for data frames. If you'd write `struct.instance_variable` in C, you'd maybe write `frame$column.variable` in R.
 * Sequence indexing is base-one. Accessing the zeroth element does not give an error but is never useful. More on this in the "Atomic vectors" section.
 * Be careful with `for` loops. The syntax is vaguely Pythonic: `for(i in <sequence>) { do something; }`. You may be tempted to use the sequence operator, `:`, which is akin to `range()` in Python, to generate a list of integers to iterate over. Two cautions here. First, this is rarely the R idiom to use; as in MATLAB, vector operations are usually faster and harder to screw up than iteration (see **important caveat** in "vector operations" below). Reference the third chapter of the [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf) for advice on vectorizing. Second, if you do something like `i in 1:foo`, the **wrong thing** will happen if `foo` ever holds the value 0. `1:0` is the sequence (1, 0), since the `:` operator can and will count backwards. Always check whether `foo` is zero before you run your loop if you use `:`. If you're iterating over the indices of a sequence, always use `seq_along(x)` in preference to `1:length(x)`.
 * Execute external code in the current workspace using `source('filename.R')`.
 * Pull in a library with `library(foo)` or `library('foo')` or `require(foo)` or `require('foo')`. `library()` is actually more stringent, and dies on an error if the library can't be found. The return value of `require()` is `TRUE` if loading the library was successful but failure to load the library is a warning and isn't fatal.
+* If something works on your machine but not your collaborator's, ask them if they have any `option()` calls in their `.Rprofile` file. This is a way to change the default behavior of some functions and it's an awful idea, because it will change the behavior of anybody else's code (including libraries) that depends on the default settings, in a way that's really hard to debug when you forget about it.
 * Otherwise, fundamentals are just C-like enough to lull you into a false sense of security.
 
 # Helping yourself
@@ -35,9 +36,9 @@ Because even R's name is stupid, it's really hard to google R things in a useful
 
 The [Hyperpolyglot](http://hyperpolyglot.org/numerical-analysis) page comparing MATLAB, R, and NumPy syntax is helpful. John D. Cook's [R programming for those coming from other languages](http://www.johndcook.com/R_language_for_programmers.html) page is brief but useful. The [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf) offers complementary advice but blames the victim.
 
-R messiah Hadley Wickham has a [very useful wiki](https://github.com/hadley/devtools/wiki) on advanced R development.  The [vocabulary](https://github.com/hadley/devtools/wiki/Vocabulary) appendix is an excellent list of things to learn.
+R messiah Hadley Wickham has a [very useful wiki-book](https://github.com/hadley/devtools/wiki) on advanced R development.  The [vocabulary](https://github.com/hadley/devtools/wiki/Vocabulary) appendix is an excellent list of things to learn.
 
-[Stack Overflow](http://stackoverflow.com/questions/tagged/r) and the [R-Help](https://stat.ethz.ch/mailman/listinfo/r-help) mailing list are good places to ask for help. There is [alarmingly dense](http://www.r-project.org/posting-guide.html) advice on asking good questions.
+[Stack Overflow](http://stackoverflow.com/questions/tagged/r) and the [R-Help](https://stat.ethz.ch/mailman/listinfo/r-help) mailing list are good places to ask for help. There is [offputtingly dense](http://www.r-project.org/posting-guide.html) advice on asking good questions.
 
 # Boolean primitives and special values
 `TRUE`, `FALSE`, and `NA` are special logic values. (`NULL` is also defined and is a special vector of length zero.) Do not ever use T and F for `TRUE` and `FALSE`. You will see people doing it but they're assholes and not your friend; T and F are just variables with default values. Set `T <- F` and source their code and laugh as it burns.
@@ -54,13 +55,13 @@ NULL, by the way, also has undefined truth value, raising an error if you test i
     > if(NULL) print("Nope");
     Error in if (NULL) print("Nope") : argument is of length zero
 
-If you need to test the truth value of some `x` that may sometimes be `NA` or have zero length, you can test the charming and concise expression `identical(TRUE, as.logical(x))`.
+If you need to test the truth value of some `x` that may sometimes be `NA` or have zero length, you can test the charming and ever-so-concise expression `identical(TRUE, as.logical(x))`, which will always evaluate to true or false.
 
 # Atomic vectors
 Jesus Christ, here we go.
 
 > Important, re: notation! When you see a reference to a vector, the writers may well be talking specifically about an **atomic** vector. There is another important data type called a list or generic vector, with (naturally) different semantics. Lists are also vectors, but lists are not atomic vectors.
-
+:9
 The atomic vector is the simplest R data type. Atomic vectors are linear vectors of a single primitive type, like an STL Vector in C++. There is no useful literal syntax for this fundamental data type. To create one of these stupid beasts, assign like:
 
     a <- c(1,2,3,4)
@@ -104,7 +105,7 @@ A potential source of mischief is that if you try to place a value of a particul
 
 
 ## Dealing with strings
-When you see "character atomic vector" you should think "string atomic vector." `length('foo bar')` yields 1 because you have created a character atomic vector of length one, containing the character value 'foo bar'. (Yes. I know.) `length(c('foomp', 'barb', 'bazzle'))` is 3.
+When you see "character atomic vector" you should think "string atomic vector." `length('foo bar')` yields 1 because you have created a character atomic vector of length one, containing the character value 'foo bar'. (Yes. I know.) `length(c('to be', 'or not', 'to be'))` is 3.
 
 String primitives, which is to say the elements of a character atomic vector, are immutable.
 
@@ -115,7 +116,9 @@ Some other things that are true:
 * Strings are indexed with `substr(x, start, stop)`. Base one, remember: `substr('foo', 1, 1)` is 'f'. `substr('foo', 2, 3)` is 'oo'.
 * You can wrap strings in either single or double quotes. Escape with backslashes as in C, e.g. `'Tim\'s bad attitude.'`
 * `paste()` is useful for a variety of string-concatenation operations. There is also a `sprintf()` function.
-* A veteran R user suggests that the stringr or Biostrings packages may ease the pain of string handling in R. I'd be more inclined to write anything substantial in Python, but horses for courses, etc.
+
+
+The [stringr](http://cran.r-project.org/web/packages/stringr/index.html) or [Biostrings](http://www.bioconductor.org/packages/2.11/bioc/html/Biostrings.html) packages may ease the pain of string handling in R. I'd be more inclined to write anything substantial in Python, but horses for courses, etc.
 
 ## Vector operations
 
@@ -125,6 +128,26 @@ You can do vector math in R, which always operates elementwise, like the dot ope
 Atomic vectors are extended to multiple dimensions as arrays. A matrix is a two-dimensional array. One-dimensional arrays are possible; the primary difference between a one-dimensional array and a vector is that `dim(some.array)` will have length 1 and `dim(some.vector)` will be `NULL`.
 
 # Indexing
+
+# Factors
+
+Factors are very useful and responsible for many unpleasant surprises. You should use factors to represent small sets of discrete possibilities. They have a family resemblance to `enum`s in C and, more loosely, `:symbols` in Ruby. A R factor is a sequence type much like a character atomic vector except that the values of the factor are constrained to a set of string values, called "levels". For example, if you have a table of measurements of some widgets and each row corresponds to a single measurement of a single widget, you could have a factor-typed column called measurement.type containing the values "length", "width", "height", "weight", and "hue", with the corresponding numeric measurements stored in a "value" column.
+
+Factors are useful for a few reasons:
+
+* they provide validation; R will throw warnings if you try to assign an undeclared level (e.g. because you miskeyed it)
+* they have a more compact representation in memory than character vectors
+* they provide semantic information about the structure of your data to e.g. model-fitting and plotting tools
+
+Factors are unordered by default. The sort order of the levels of an unordered factor is determined lexiographically in the current locale. If your factors have some sort of innate order, you can create an "ordered factor" with `ordered()`. Even for nominally unordered factors, the "first" value of the factor can have semantic importance for e.g. linear regression with `lm`. If you find that you need to change the first value of an unordered factor, use the `relevel` function as `my.factor <- relevel(my.factor, 'weight')`.
+
+Comparisons for factors look the same as they do for character atomic vectors. For example, `measurements[measurements$measurement.type == 'weight',]` will give you all of the weight rows of the measurement table.
+
+Factors have a numeric representation underneath that you can see by calling `as.integer` against a factor. The [R language documentation](http://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors) rolls its eyes, sighs, pushes up its glasses, and stops just short of telling you not to look. Caveat emptor.
+
+All of the levels that a factor will ever have must be defined at the time the factor is created. If you want to add new levels or remove existing levels, you have to build a new factor. If you attempt to assign a value to an element of a factor that is not one of the pre-existing levels, you will get an error for your troubles and the element will take the value `NA`.
+
+In keeping with R's "maximal-mystery" design philosophy, whenever a data frame is instantiated with data from a character atomic vector or with character data read from a file with `read.table`, the resulting column will be a factor instead of a character atomic vector. Passing `stringsAsFactors = FALSE` to `data.frame()` or `read.table()` will prevent this behavior and leave your character vectors alone.
 
 # Data frames
 
@@ -138,6 +161,13 @@ If anyone ever suggests that you use `attach()` while working with data frames, 
 ### From text data
 
 The `read.table()` function, which is used to read data from delimited text files, gives you data frames. The syntax you will almost always want to use to get data into R is `read.table('path/to/file', header=TRUE, sep='\t')` (substituting your favorite separator, of course). `read.table` isn't the zippiest option for giant data sets but don't worry about it until you're sure you're already worried about it.
+
+Some things that you should know about `read.table` are:
+
+* String values are, by default, treated as `factor`s, *not* as character atomic vectors. If the strings in your data file describe elements of a set of discrete possibilities, this is often convenient and desirable. If you are not expecting it, this behavior may threaten to [ruin your career](https://twitter.com/seanjtaylor/status/322410764151443457).
+* Lines starting with `#` will be silently ignored.
+* Any values which are the string `NA` will be understood as a missing value, unless you pass `na.strings=NULL`.
+* The strings `NaN` and `Inf` will be interpreted appropriately if they appear in columns that otherwise appear to be numeric.
 
 If they don't already have them, you should give your data files column headers that are explanatory but easy to type, because it makes a lot of the access semantics for data frames much nicer.
 
@@ -214,7 +244,6 @@ Don't add data to the frame a row at a time. It is slower than molasses and just
 
 # Lists
 
-# Factors
 
 # Colophon
 © Tim Smith 2012-3. This work is made available under a [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US) License.
