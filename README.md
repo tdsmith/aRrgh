@@ -61,7 +61,7 @@ If you need to test the truth value of some `x` that may sometimes be `NA` or ha
 Jesus Christ, here we go.
 
 > Important, re: notation! When you see a reference to a vector, the writers may well be talking specifically about an **atomic** vector. There is another important data type called a list or generic vector, with (naturally) different semantics. Lists are also vectors, but lists are not atomic vectors.
-:9
+
 The atomic vector is the simplest R data type. Atomic vectors are linear vectors of a single primitive type, like an STL Vector in C++. There is no useful literal syntax for this fundamental data type. To create one of these stupid beasts, assign like:
 
     a <- c(1,2,3,4)
@@ -164,7 +164,7 @@ The `read.table()` function, which is used to read data from delimited text file
 
 Some things that you should know about `read.table` are:
 
-* String values are, by default, treated as `factor`s, *not* as character atomic vectors. If the strings in your data file describe elements of a set of discrete possibilities, this is often convenient and desirable. If you are not expecting it, this behavior may threaten to [ruin your career](https://twitter.com/seanjtaylor/status/322410764151443457).
+* String values are, by default, treated as `factor`s, *not* as character atomic vectors. If the strings in your data file describe elements of a set of discrete possibilities, this is often convenient and desirable. If you are not expecting it, this behavior may threaten to [ruin your career](https://twitter.com/seanjtaylor/status/322410764151443457). Pass `stringsAsFactors=FALSE` to leave your character vectors alone.
 * Lines starting with `#` will be silently ignored.
 * Any values which are the string `NA` will be understood as a missing value, unless you pass `na.strings=NULL`.
 * The strings `NaN` and `Inf` will be interpreted appropriately if they appear in columns that otherwise appear to be numeric.
