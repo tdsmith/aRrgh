@@ -242,6 +242,30 @@ Adding columns is easy: `a <- Formaldehyde; a$bar <- seq(6)` creates a new colum
 
 Don't add data to the frame a row at a time. It is slower than molasses and just as [deadly](http://en.wikipedia.org/wiki/Boston_Molasses_Disaster); this is the second level of the [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf). Create your data frame from lists that are big enough to contain all of the data you expect the frame to contain, perhaps filling with `NA`. You may, however, merge two data frames vertically using `rbind()`.
 
+## Data frame operations
+
+Data frames are a subclass of lists, so many functions which operate on lists can operate on data frames. Great! Sometimes...
+
+    > DFx <- data.frame(x=1:3, y=6:8)
+    > DFx
+      x y
+    1 1 6
+    2 2 7
+    3 3 8
+    > class(Dfx)
+    [1] "data.frame"
+
+So far so good. If we try `class(lapply(DFx, length))`, we'll see that it returns a list. That's ok, `lapply` documentation explicitly states that it returns a list. What about binary operators such as `+` or `*`? 
+
+    > class(DFx + DFx)
+    [1] "data.frame"
+    > class(DFx * 2)
+    [1] "data.frame"
+    > class(DFx ^ 2)
+    [1] "matrix"
+
+Wait, what? [Apparently](http://stackoverflow.com/a/19964999/1188479), `Ops.data.frame` implements `+`, `-`, `*`, `/`, `%%` and `%/%` as methods on data frames--anything else converts the data.frame to a matrix first. Note also that `**` is [converted](http://stat.ethz.ch/R-manual/R-devel/library/base/html/Arithmetic.html) by the R parser to `^`, but nothing in the help for [S3 generic functions](http://stat.ethz.ch/R-manual/R-devel/library/base/html/groupGeneric.html) indicates that some built in operators are more equal than others. 
+
 # Lists
 
 
