@@ -1,7 +1,7 @@
-[<- Back to index](index.html)
-
-# Factors
-
+---
+title: Factors
+layout: page
+---
 Factors are very useful and responsible for many unpleasant surprises. Many people find that this is the single most important thing to learn about factors (but read on!):
 
 > In keeping with R's "maximal-mystery" design philosophy, whenever a data frame is instantiated with data from a character atomic vector or with character data read from a file with `read.table`, the resulting column will be a factor instead of a character atomic vector. Passing `stringsAsFactors = FALSE` to `data.frame()` or `read.table()` will prevent this behavior and leave your character vectors alone.
@@ -21,15 +21,3 @@ Comparisons for factors look the same as they do for character atomic vectors. F
 Factors have a numeric representation underneath that you can see by calling `as.integer` against a factor. The [R language documentation](http://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors) rolls its eyes, sighs, pushes up its glasses, and stops just short of telling you not to look. Caveat emptor.
 
 All of the levels that a factor will ever have must be defined at the time the factor is created. If you want to add new levels or remove existing levels, you have to build a new factor. If you attempt to assign a value to an element of a factor that is not one of the pre-existing levels, you will get a warning for your troubles and the element will take the value `NA`.
-
-[<- Back to index](index.html)
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-6770445-5', 'tim-smith.us');
-  ga('send', 'pageview');
-
-</script>

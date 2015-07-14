@@ -1,7 +1,7 @@
-[<- Back to index](index.html)
-
-# Basic syntax and gotchas
-
+---
+title: Basic syntax and gotchas
+layout: page
+---
 * `;` or newline separate commands.
 * Use hash-comments (`#` to end of line).
 * Variable typing is weak and dynamic; variables are not declared before use. Like PHP and Javascript, variables have function (not block) scope.
@@ -28,15 +28,3 @@ The [Hyperpolyglot](http://hyperpolyglot.org/numerical-analysis) page comparing 
 R messiah Hadley Wickham has a [very useful wiki-book](https://github.com/hadley/devtools/wiki) on advanced R development.  The [vocabulary](https://github.com/hadley/devtools/wiki/Vocabulary) appendix is an excellent list of things to learn.
 
 [Stack Overflow](http://stackoverflow.com/questions/tagged/r) and the [R-Help](https://stat.ethz.ch/mailman/listinfo/r-help) mailing list are good places to ask for help. There is [offputtingly dense](http://www.r-project.org/posting-guide.html) advice on asking good questions.
-
-[<- Back to index](index.html)
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-6770445-5', 'tim-smith.us');
-  ga('send', 'pageview');
-
-</script>

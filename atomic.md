@@ -1,6 +1,7 @@
-[<- Back to index](index.html)
-
-# Atomic vectors
+---
+title: Atomic vectors
+layout: page
+---
 Jesus Christ, here we go.
 
 > Important, re: notation! When you see a reference to a vector, the writers may well be talking specifically about an **atomic** vector. There is another important data type called a list or **generic** vector, with (naturally) different semantics. Lists are also vectors, but lists are not atomic vectors.
@@ -85,15 +86,3 @@ You can do vector math in R, which always operates elementwise, like the dot ope
 
 # Arrays
 Atomic vectors are extended to multiple dimensions as arrays. A matrix is a two-dimensional array. One-dimensional arrays are possible; the primary difference between a one-dimensional array and a vector is that `dim(some.array)` will have length 1 and `dim(some.vector)` will be `NULL`.
-
-[<- Back to index](index.html)
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-6770445-5', 'tim-smith.us');
-  ga('send', 'pageview');
-
-</script>
