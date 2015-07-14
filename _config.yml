@@ -1,0 +1,10 @@
+# Site settings
+title: aRrgh
+email: arrgh@tim-smith.us
+description: > # this means to ignore newlines until "baseurl:"
+  A newcomer's (angry) guide to R.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://arrgh.tim-smith.us" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
