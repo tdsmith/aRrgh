@@ -12,7 +12,7 @@ R is a shockingly dreadful language for an exceptionally useful data analysis en
 
 [^engineers]: Many brilliant and talented people have contributed to R over the years, many of whom are renowned computer scientists for whom I have tremendous respect! But a computer scientist is not the same as a software engineer.
 
-But there are a lot of great tools that are built in R. ggplot2 is first-in-class and Bioconductor packages are often essential. Sometimes there's aught to do but grin and bear (though never without a side of piss and moan).
+But there are a lot of great tools that are built in R. [ggplot2](http://docs.ggplot2.org/current/) is first-in-class and [Bioconductor](https://bioconductor.org/) packages are often essential. Sometimes there's aught to do but grin and bear (though never without a side of piss and moan).
 
 The documentation is inanely bad. I can't explain it. aRrgh is my attempt to explain the language to myself. aRrgh exists as a living document and will continue to grow -- it is not complete, but it got to a point where it seemed like it was probably useful so I decided to toss it on the web. It should be correct and it's a bug if it isn't. Please email me or [file issues on Github](https://github.com/tdsmith/aRrgh/issues).
 
@@ -24,7 +24,7 @@ The goal of the document is to describe R's data types and structures while offe
  * [Atomic vectors](atomic.html): R's simplest data types; logic values; vectorizing; arrays
  * [Factors](factors.html): A useful and misunderstood data type. Where they come from, how to handle them
  * [Data frames](data_frames.html): R's structure for tabular data. How to create them, access semantics
- 
+
 To come?:
 
  * Indexing
