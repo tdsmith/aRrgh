@@ -2,6 +2,9 @@
 title: Basic syntax and gotchas
 layout: page
 ---
+
+Here, in no particular order, is a list of things that will help you get a sense of the shape of the language if you're already familiar with other curly-brace or interpreted languages.
+
 * `;` or newline separate commands.
 * Use hash-comments (`#` to end of line).
 * Variable typing is weak and dynamic; variables are not declared before use. Like PHP and Javascript, variables have function (not block) scope.
