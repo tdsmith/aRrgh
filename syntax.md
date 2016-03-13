@@ -38,7 +38,9 @@ Here, in no particular order, is a list of things that will help you get a sense
 
 The R interpreter's built-in help feature is the only place I can consistently find documentation on anything. Try: `?function_name` or `??search_term`.
 
-Because even R's name is stupid, it's really hard to google R things in a useful way. There is a tool called RSeek that pretends to help but it just returns different useless results. Sorry. Welcome to R! Your life is now hell.
+Because even R's name is stupid, it's really hard to google R things in a useful way. Sorry. Welcome to R!
+
+[![This is fine.](https://i.imgur.com/c4jt321.png)](http://gunshowcomic.com/648)
 
 The [Hyperpolyglot](http://hyperpolyglot.org/numerical-analysis) page comparing MATLAB, R, and NumPy syntax is helpful. John D. Cook's [R programming for those coming from other languages](http://www.johndcook.com/R_language_for_programmers.html) page is brief but useful. The [R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf) offers complementary advice but blames the victim.
 
