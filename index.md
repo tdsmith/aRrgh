@@ -8,7 +8,9 @@ layout: naked
 with Kevin Ushey \<kevinushey@gmail.com\>, [@kevin_ushey](http://twitter.com/kevin_ushey)
 
 # Introduction
-R is a shockingly dreadful language for an exceptionally useful data analysis environment. The more you learn about the R language, the worse it will feel. The development environment suffers from literally decades of accretion of stupid hacks from a community containing, to a first-order approximation, zero software engineers. R makes me want to kick things almost every time I use it.
+R is a shockingly dreadful language for an exceptionally useful data analysis environment. The more you learn about the R language, the worse it will feel. The development environment suffers from literally decades of accretion of stupid hacks from a community containing, to a first-order approximation, zero software engineers.[^engineers] R makes me want to kick things almost every time I use it.
+
+[^engineers]: Many brilliant and talented people have contributed to R over the years, many of whom are renowned computer scientists for whom I have tremendous respect! But a computer scientist is not the same as a software engineer.
 
 But there are a lot of great tools that are built in R. ggplot2 is first-in-class and Bioconductor packages are often essential. Sometimes there's aught to do but grin and bear (though never without a side of piss and moan).
 
