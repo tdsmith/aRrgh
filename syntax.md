@@ -5,7 +5,7 @@ layout: page
 
 Here, in no particular order, is a list of things that will help you get a sense of the shape of the language if you're already familiar with other curly-brace or interpreted languages.
 
-* `;` or newline separate commands.
+* `;` or newline separates commands.
 
 * Use hash-comments (`#` to end of line).
 
