@@ -30,6 +30,7 @@ To come?:
  * Indexing
  * Lists
  * Namespaces
+ * Beyond Base R, Or: How I Learned To Stop Worrying and Love the Hadleyverse
 
 # Colophon
 © Tim Smith 2012-6. This work is made available under a [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US) License.
