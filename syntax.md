@@ -38,7 +38,7 @@ Here, in no particular order, is a list of things that will help you get a sense
 
 * Otherwise, fundamentals are just C-like enough to lull you into a false sense of security.
 
-[^globals]: Technically, this finds the closest parent scope that contains a variable of that name, falling back to assignment in the global scope if the name isn't found in any of the parent environments. Consult `?"<<-"` for the gory details.
+[^globals]: Technically, this finds the closest parent scope that contains a variable of that name, falling back to assignment in the global scope if the name isn't found in any of the parent environments. Consult `?"<<-"` for more. It turns out name resolution in R [is complicated](http://blog.obeautifulcode.com/R/How-R-Searches-And-Finds-Stuff/).
 
 # Helping yourself
 
