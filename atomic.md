@@ -89,4 +89,4 @@ You can do vector math in R, which always operates elementwise, like the dot ope
 [^ghastly]: which is fucking _ghastly_
 
 ## Arrays
-Atomic vectors are extended to multiple dimensions as arrays. A matrix is a two-dimensional array. One-dimensional arrays are possible; the primary difference between a one-dimensional array and a vector is that `dim(some.array)` will have length 1 and `dim(some.vector)` will be `NULL`. _N_-dimensional arrays are indexed like `my.array[dim1, dim2, dim3]`. Use an empty value to represent "all values"—i.e., to select column 3 of a matrix, use `my.matrix[3,]`.
+Atomic vectors are extended to multiple dimensions as arrays. A matrix is a two-dimensional array. One-dimensional arrays are possible; the primary difference between a one-dimensional array and a vector is that `dim(some.array)` will have length 1 and `dim(some.vector)` will be `NULL`. _N_-dimensional arrays are indexed like `my.array[dim1, dim2, dim3]`. Use an empty value to represent "all values"—i.e., to select row 3 of a matrix, use `my.matrix[3,]`.
