@@ -7,6 +7,29 @@ layout: naked
 [Tim Smith](http://tim-smith.us) \<arrgh@tim-smith.us\>, [@biotimylated](http://twitter.com/biotimylated)  
 with Kevin Ushey \<kevinushey@gmail.com\>, [@kevin_ushey](http://twitter.com/kevin_ushey)
 
+# An apology.
+
+Every once in a while, this document catches the wind.
+
+Since I first wrote it, I have become less convinced of the fairness, importance,
+and sophistication of many of the criticisms I've leveled.
+
+I've become quite productive in R.
+I've also spent some time as a maintainer of a popular open-source tool
+and learned how it feels to be the target of abuse from Internet Randos.
+(I survived, but it wasn't motivating.)
+
+I've long intended to reconsider my arguments and tone
+but engaging with my own embarrassing writing
+was never the most interesting way to spend a weekend.
+
+I'm grateful to the R community for their labors.
+I use R and benefit from R and I apologize for the lack of empathy I show here.
+I'm leaving the rest of the document unchanged for the moment in hopes that the technical content
+is useful to new users but I expect to revise it soon and remove many of the "good parts."
+
+R is fine. (Do use the tidyverse.)
+
 # Introduction
 R is a shockingly dreadful language for an exceptionally useful data analysis environment. The more you learn about the R language, the worse it will feel. The development environment suffers from literally decades of accretion of stupid hacks from a community containing, to a first-order approximation, zero software engineers.[^engineers] R makes me want to kick things almost every time I use it.
 
